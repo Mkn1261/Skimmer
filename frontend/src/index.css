@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  /* warm cream + amber. keep borders on --color-line so nothing
+     goes grey-blue and clashes with the background. */
+  --color-bg:        #f7f5f0;
+  --color-surface:   #ffffff;   /* cards, panels, inputs */
+  --color-ink:       #1a1a1a;
+  --color-muted:     #6b6b6b;   /* secondary text + placeholders */
+  --color-line:      #e2ddd6;
+  --color-accent:    #d97706;
+  --color-accent-hi: #b45309;   /* hover */
+  --color-accent-sm: #fef3c7;   /* tint fill */
+  --color-success:   #16a34a;
+  --color-danger:    #dc2626;
+
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body:    "DM Sans", system-ui, sans-serif;
+}
+
+@layer base {
+  :root {
+    font-family: var(--font-body);
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    @apply antialiased;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  /* style inputs once here instead of repeating classes on every field */
+  input:not([type="checkbox"]),
+  textarea,
+  select {
+    @apply outline-none border rounded-md px-3 py-2 text-sm transition-colors w-full;
+    border-color: var(--color-line);
+    background: var(--color-surface);
+    color: var(--color-ink);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-muted);
+  }
+
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-accent) 14%, transparent);
+  }
+
+  :where(a, button, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+::selection {
+  background: var(--color-accent-sm);
+}
+
+.chat-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 9999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
